@@ -52,9 +52,28 @@ const postAluno = (req, res) => {
     }
 
 }
+//DELETE STUDENT
+const deleteAluno = async (req, res) => {
+    const { id } = req.params;
+
+    const findIndex = alunos.findIndex((aluno) => {
+        return aluno.id === Number(id)
+    });
+
+    if (!Number(id)) {
+        return res.status(400).json({ message: "ID should be a number" });
+    };
+    if (findIndex === -1) {
+        return res.status(404).json({ message: "Student not found" });
+    };
+
+    alunos.splice(findIndex, 1);
+    res.status(200).json("Student deleted successfully");
+}
 
 module.exports = {
     getAlunos,
     getAluno,
-    postAluno
+    postAluno,
+    deleteAluno
 }
